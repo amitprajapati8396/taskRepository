@@ -1,0 +1,95 @@
+
+
+<style>
+    .bg1{ background-color :  lightblue;  }
+    .bg2{ background-color :  lightgreen;  }
+    .bg3{ background-color :  pink;  }
+    .h2{ background-color: blanchedalmond;}
+    .c1
+    {
+      color : blue;
+      border:1px solid green;
+      width :  100px;
+      margin : 5px;
+      float : left;
+      text-align : center;
+      background-color : lightyellow;
+    }
+  
+    .c2
+    {
+       background-color: green;
+       color : white;
+       margin: 0px;
+    }
+  
+  </style>
+  
+<h2 class="h2"> Select Display Mode :</h2>
+
+
+choose mode :
+<select [(ngModel)]="mode">
+  <option>List</option>
+  <option>Table</option>
+  <option>Card</option>
+  <option>Others</option>
+</select>
+<hr>
+<section  [ngSwitch]="mode">
+   <article *ngSwitchCase="'List'">
+        <table>
+           <!-- <tr style="color:blue; font-weight: bold;">
+              <td> ID</td>               
+              <td> Name</td>
+              <td> Job</td>
+              <td> Salary</td> 
+              <td> Country</td>
+           </tr>  -->
+           <tr *ngFor="let emp of employee">
+               <td>{{emp.eid}}</td>
+               <td>{{emp.ename}}</td>
+               <td>{{emp.job}}</td>
+               <td>{{emp.salary}}</td>
+               <td>{{emp.country}}</td>
+           </tr>
+        </table>
+   </article>
+    
+   <article *ngSwitchCase=" 'Table' ">
+    <table border="2" cellSpacing="0"  cellpadding="3">
+      <tr  class="bg1">
+            <td> ID</td>               
+            <td> Name</td>
+            <td> Job</td>
+            <td> Salary</td> 
+            <td> Country</td>
+      </tr>
+          <tr   *ngFor="let emp of employee;  let i = index;  let x = even; let y = odd; "
+                [ngClass]="{bg2:x,  bg3:y}">
+            <td>{{emp.eid}}</td>
+            <td>{{emp.ename}}</td>
+            <td>{{emp.job}}</td>
+            <td>{{emp.salary}}</td>
+            <td>{{emp.country}}</td>
+      </tr>
+
+      <!-- Test the following row by delete items from the array in ts file -->
+      <tr *ngIf="employee.length <= 0"  class="bg3">
+          <td colspan="3">**Student Details are not available. </td>
+      </tr>
+    </table>
+  </article>
+  <article *ngSwitchCase=" 'Card' ">
+    <div class="c1" *ngFor="let emp of employee">
+      <p  class="c2">{{emp.eid}}</p>
+      <span>{{emp.ename}}</span><br>
+      <span> {{emp.job}}</span><br>
+      <span>{{emp.salary}}</span><br>
+      <span> {{emp.country}}</span>
+      <br/>
+    </div>
+  </article>
+
+  <article *ngSwitchDefault>This is DEFAULT format</article>
+</section>
